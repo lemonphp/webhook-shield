@@ -1,4 +1,4 @@
-# Introduction
+# Webhook Shield
 
 [![Latest Version](https://img.shields.io/packagist/v/lemonphp/webhook-shield.svg)](https://packagist.org/packages/lemonphp/webhook-shield)
 [![Software License](https://img.shields.io/github/license/lemonphp/webhook-shield.svg)](LICENSE.md)
@@ -36,8 +36,6 @@ $ composer require lemonphp/webhook-shield
 ```
 
 ## Usage
-
-### LemonPHP Framework
 
 ### Zend Expressive
 
