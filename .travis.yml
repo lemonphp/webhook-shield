@@ -1,0 +1,29 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+    - php: 7.2
+      env: COVERAGE=1
+    - php: 7.3
+
+before_install:
+  - travis_retry composer self-update
+
+install:
+  - travis_retry composer install --no-interaction --no-suggest --prefer-dist $COMPOSER_ARGS
+
+script:
+  - php vendor/bin/phpcs
+  - php vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
+
+after_success:
+  - if [[ $COVERAGE = '1' ]]; then
+      travis_retry composer require php-coveralls/php-coveralls;
+      travis_retry php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v;
+    fi

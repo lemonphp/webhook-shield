@@ -1,0 +1,51 @@
+{
+  "name": "lemonphp/webhook-shield",
+  "type": "library",
+  "description": "Protects against unverified webhooks from 3rd party services",
+  "keywords": [
+    "psr7",
+    "psr15",
+    "psr17",
+    "webhook",
+    "shield",
+    "protected-webhook"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lemonphp/webhook-shield",
+  "authors": [
+    {
+      "name": "Oanh Nguyen",
+      "email": "oanhnn.bk@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "psr/http-server-handler": "^1.0",
+    "psr/http-server-middleware": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0",
+    "squizlabs/php_codesniffer": "^3.2"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Lemon\\WebhookShield\\": "src/"
+    }
+  },
+  "scripts": {
+    "phpunit": "php vendor/phpunit/phpunit/phpunit --coverage-html storage/coverage",
+    "phpcs": "php vendor/squizlabs/php_codesniffer/bin/phpcs",
+    "phpcbf": "php vendor/squizlabs/php_codesniffer/bin/phpcbf"
+  },
+  "support": {
+    "issues": "https://github.com/lemonphp/webhook-shield/issues",
+    "source": "https://github.com/lemonphp/webhook-shield"
+  }
+}
