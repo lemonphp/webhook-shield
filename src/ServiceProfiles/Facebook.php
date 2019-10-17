@@ -1,18 +1,18 @@
 <?php
 
-namespace Lemon\WebhookShield\Services;
+namespace Lemon\WebhookShield\ServiceProfiles;
 
-use Lemon\WebhookShield\ServiceInterface;
+use Lemon\WebhookShield\ServiceProfileInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Facebook
+ * Class Facebook service profile
  *
- * @package     Lemon\WebhookShield\Services
+ * @package     Lemon\WebhookShield\ServiceProfiles
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
-class Facebook implements ServiceInterface
+class Facebook implements ServiceProfileInterface
 {
     /**
      * @var string
@@ -20,31 +20,32 @@ class Facebook implements ServiceInterface
     protected $secret;
 
     /**
-     * Facebook service constructor.
+     * Facebook service profile constructor.
      *
-     * @param array $config
+     * @param  string $secret
      */
-    public function __construct(array $config)
+    public function __construct(string $secret)
     {
-        $this->secret = $config['secret'] ?? '';
+        $this->secret = $secret;
     }
 
     /**
-     * List all allowed HTTP methods
+     * Check the given method is allowed
      *
-     * @return string[]
+     * @param  string $method
+     * @return bool
      */
-    public function allowMethods(): array
+    public function isAllowedMethod(string $method): bool
     {
-        return ['POST'];
+        return strtoupper($method) === 'POST';
     }
 
     /**
-     * List request header fields for checking
+     * List required request header fields for checking
      *
      * @return array
      */
-    public function headerKeys(): array
+    public function requiredHeaderKeys(): array
     {
         return ['X-Hub-Signature'];
     }

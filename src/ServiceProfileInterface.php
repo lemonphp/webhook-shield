@@ -5,27 +5,28 @@ namespace Lemon\WebhookShield;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Interface ServiceInterface
+ * Interface service profile
  *
  * @package     Lemon\WebhookShield
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
-interface ServiceInterface
+interface ServiceProfileInterface
 {
     /**
-     * List all allowed HTTP methods
+     * Check the given method is allowed
      *
-     * @return string[]
+     * @param  string $method
+     * @return bool
      */
-    public function allowMethods(): array;
+    public function isAllowedMethod(string $method): bool;
 
     /**
-     * List request header fields for checking
+     * List required request header fields for checking
      *
      * @return array
      */
-    public function headerKeys(): array;
+    public function requiredHeaderKeys(): array;
 
     /**
      * Verify request

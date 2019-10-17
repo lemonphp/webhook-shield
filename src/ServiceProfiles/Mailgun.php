@@ -1,18 +1,18 @@
 <?php
 
-namespace Lemon\WebhookShield\Services;
+namespace Lemon\WebhookShield\ServiceProfiles;
 
-use Lemon\WebhookShield\ServiceInterface;
+use Lemon\WebhookShield\ServiceProfileInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Mailgun
+ * Class Mailgun service profile
  *
- * @package     Lemon\WebhookShield\Services
+ * @package     Lemon\WebhookShield\ServiceProfiles
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
-class Mailgun implements ServiceInterface
+class Mailgun implements ServiceProfileInterface
 {
     /**
      * @var string
@@ -20,7 +20,7 @@ class Mailgun implements ServiceInterface
     protected $token;
 
     /**
-     * @var string
+     * @var int
      */
     protected $tolerance;
 
@@ -36,21 +36,22 @@ class Mailgun implements ServiceInterface
     }
 
     /**
-     * List all allowed HTTP methods
+     * Check the given method is allowed
      *
-     * @return string[]
+     * @param  string $method
+     * @return bool
      */
-    public function allowMethods(): array
+    public function isAllowedMethod(string $method): bool
     {
-        return ['POST'];
+        return strtoupper($method) === 'POST';
     }
 
     /**
-     * List request header fields for checking
+     * List required request header fields for checking
      *
      * @return array
      */
-    public function headerKeys(): array
+    public function requiredHeaderKeys(): array
     {
         return [];
     }

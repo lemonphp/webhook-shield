@@ -19,7 +19,7 @@ install:
   - travis_retry composer install --no-interaction --no-suggest --prefer-dist $COMPOSER_ARGS
 
 script:
-  - php vendor/bin/phpcs
+  - php vendor/bin/phpcs --standard=phpcs.xml.dist
   - php vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
 
 after_success:

@@ -1,7 +1,7 @@
 # Webhook Shield
 
 [![Latest Version](https://img.shields.io/packagist/v/lemonphp/webhook-shield.svg)](https://packagist.org/packages/lemonphp/webhook-shield)
-[![Software License](https://img.shields.io/github/license/lemonphp/webhook-shield.svg)](LICENSE.md)
+[![Software License](https://img.shields.io/github/license/lemonphp/webhook-shield.svg)](LICENSE)
 [![Build Status](https://img.shields.io/travis/lemonphp/webhook-shield/master.svg)](https://travis-ci.org/lemonphp/webhook-shield)
 [![Coverage Status](https://img.shields.io/coveralls/github/lemonphp/webhook-shield/master.svg)](https://coveralls.io/github/lemonphp/webhook-shield?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/lemonphp/webhook-shield.svg)](https://packagist.org/packages/lemonphp/webhook-shield)
@@ -37,23 +37,39 @@ $ composer require lemonphp/webhook-shield
 
 ## Usage
 
-### Zend Expressive
+### Slim 4
 
-```php
-// TODO
-```
+1. Installation Slim application follow link http://www.slimframework.com/docs/v4/start/installation.html
 
-### Slim 3
+   ```bash
+   $ composer require slim/slim slim/psr7 lemonphp/webhook-shield
+   ```
 
-```php
-// TODO
-```
+2. Make `public/index.php` with below content
 
-### Lumen
+   ```php
+   <?php
+   use Lemon\WebhookShield\ServiceProfiles\Facebook;
+   use Lemon\WebhookShield\WebhookShieldMiddleware;
+   use Psr\Http\Message\ResponseInterface as Response;
+   use Psr\Http\Message\ServerRequestInterface as Request;
+   use Slim\Factory\AppFactory;
 
-```php
-// TODO
-```
+   require __DIR__ . '/../vendor/autoload.php';
+
+   $app = AppFactory::create();
+
+   $shield = new WebhookShieldMiddleware(new Facebook('secret'), $app->getResponseFactory());
+
+   $app->post('/webhook/facebook', function (Request $req, Response $res, $args) {
+        // TODO: Add webhook event to message queue
+        return $res->withStatus(200, 'OK');
+   })->add($shield);
+
+   // other routes
+
+   $app->run();
+   ```
 
 ## Changelog
 
@@ -65,7 +81,7 @@ See all change logs in [CHANGELOG](CHANGELOG.md)
 $ git clone git@github.com/lemonphp/webhook-shield.git /path
 $ cd /path
 $ composer install
-$ composer phpunit
+$ composer test
 ```
 
 ## Contributing

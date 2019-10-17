@@ -1,18 +1,18 @@
 <?php
 
-namespace Lemon\WebhookShield\Services;
+namespace Lemon\WebhookShield\ServiceProfiles;
 
-use Lemon\WebhookShield\ServiceInterface;
+use Lemon\WebhookShield\ServiceProfileInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Github
+ * Class Github service profile
  *
- * @package     Lemon\WebhookShield\Services
+ * @package     Lemon\WebhookShield\ServiceProfiles
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
-class Github implements ServiceInterface
+class Github implements ServiceProfileInterface
 {
     /**
      * @var string
@@ -20,31 +20,32 @@ class Github implements ServiceInterface
     protected $token;
 
     /**
-     * Github service constructor.
+     * Github service profile constructor.
      *
-     * @param array $config
+     * @param  string $token
      */
-    public function __construct(array $config)
+    public function __construct(string $token)
     {
-        $this->token = $config['token'] ?? '';
+        $this->token = $token;
     }
 
     /**
-     * List all allowed HTTP methods
+     * Check the given method is allowed
      *
-     * @return string[]
+     * @param  string $method
+     * @return bool
      */
-    public function allowMethods(): array
+    public function isAllowedMethod(string $method): bool
     {
-        return ['POST'];
+        return strtoupper($method) === 'POST';
     }
 
     /**
-     * List request header fields for checking
+     * List required request header fields for checking
      *
      * @return array
      */
-    public function headerKeys(): array
+    public function requiredHeaderKeys(): array
     {
         return ['X-Hub-Signature'];
     }

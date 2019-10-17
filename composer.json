@@ -40,9 +40,10 @@
     }
   },
   "scripts": {
-    "phpunit": "php vendor/phpunit/phpunit/phpunit --coverage-html storage/coverage",
-    "phpcs": "php vendor/squizlabs/php_codesniffer/bin/phpcs",
-    "phpcbf": "php vendor/squizlabs/php_codesniffer/bin/phpcbf"
+    "coverage": "php vendor/bin/phpunit --coverage-html storage/coverage",
+    "cs-check": "php vendor/bin/phpcs --standard=phpcs.xml.dist",
+    "cs-fix": "php vendor/bin/phpcbf --standard=phpcs.xml.dist",
+    "test": "php vendor/bin/phpunit --testdox"
   },
   "support": {
     "issues": "https://github.com/lemonphp/webhook-shield/issues",

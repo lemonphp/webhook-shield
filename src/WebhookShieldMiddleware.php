@@ -9,7 +9,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class WebhookShieldMiddleware
+ * Class WebhookShield Middleware
  *
  * @package     Lemon\WebhookShield
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
@@ -18,9 +18,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class WebhookShieldMiddleware implements MiddlewareInterface
 {
     /**
-     * @var ServiceInterface
+     * @var ServiceProfileInterface
      */
-    protected $service;
+    protected $profile;
 
     /**
      * @var ResponseFactoryInterface
@@ -30,13 +30,13 @@ class WebhookShieldMiddleware implements MiddlewareInterface
     /**
      * Constructor
      *
-     * @param  ServiceInterface         $service
+     * @param  ServiceProfileInterface         $profile
      * @param  ResponseFactoryInterface $responseFactory
      * @return void
      */
-    public function __construct(ServiceInterface $service, ResponseFactoryInterface $responseFactory)
+    public function __construct(ServiceProfileInterface $profile, ResponseFactoryInterface $responseFactory)
     {
-        $this->service = $service;
+        $this->profile = $profile;
         $this->responseFactory = $responseFactory;
     }
 
@@ -66,16 +66,16 @@ class WebhookShieldMiddleware implements MiddlewareInterface
      */
     protected function passes(ServerRequestInterface $request): bool
     {
-        if (!in_array($request->getMethod(), $this->service->allowMethods())) {
+        if (!$this->profile->isAllowedMethod($request->getMethod())) {
             return false;
         }
 
-        foreach ($this->service->headerKeys() as $header) {
-            if (!$request->hasHeader($header)) {
+        foreach ($this->profile->requiredHeaderKeys() as $headerKey) {
+            if (!$request->hasHeader($headerKey)) {
                 return false;
             }
         }
 
-        return $this->service->verify($request);
+        return $this->profile->verify($request);
     }
 }

@@ -67,9 +67,9 @@ trait NonPublicAccessibleTrait
      */
     protected function invokeNonPublicMethod($obj, $method, ...$params)
     {
-//        if (!is_object($obj) || !is_string($method)) {
-//            throw new InvalidArgumentException();
-//        }
+        if (!is_object($obj) || !is_string($method)) {
+            throw new InvalidArgumentException();
+        }
         $ref = new ReflectionMethod($obj, $method);
         $ref->setAccessible(true);
 
